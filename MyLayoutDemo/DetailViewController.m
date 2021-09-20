@@ -84,6 +84,7 @@
 #pragma mark -- UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     UIViewController *demoVC = [[self.demoVCList[indexPath.row][@"class"] alloc] init];
@@ -105,7 +106,7 @@
     
     if (self.isPresentVC)
     {
-        [[[UIAlertView alloc] initWithTitle:@"" message:NSLocalizedString(@"If you select \"Present\", than you can touch topleft corner of Status bar to dissmis the view controller",@"") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"" message:NSLocalizedString(@"If you select \"Present\", then you can touch topleft corner of Status bar to dissmis the view controller",@"") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
     }
 }
 

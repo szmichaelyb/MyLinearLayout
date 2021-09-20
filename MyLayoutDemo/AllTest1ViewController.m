@@ -9,6 +9,7 @@
 #import "AllTest1ViewController.h"
 #import "AllTestDataModel.h"
 #import "AllTest1TableViewCell.h"
+#import "AllTest1TableViewCellForAutoLayout.h"
 #import "AllTest1TableViewHeaderFooterView.h"
 
 #import "MyLayout.h"
@@ -49,7 +50,7 @@
                                ];
         
         NSArray *textMessages = @[@"",
-                                  NSLocalizedString(@"a single line text", @""),
+                                  NSLocalizedString(@"A single line text", @""),
                                   NSLocalizedString(@"This Demo is used to introduce the solution when use layout view to realize the UITableViewCell's dynamic height. We only need to use the layout view's sizeThatFits method to evaluate the size of the layout view. and you can touch the Cell to shrink the height when the Cell has a picture.", @""),
                                   NSLocalizedString(@"Through layout view's sizeThatFits method can assess a UITableViewCell dynamic height.EstimateLayoutRect just to evaluate layout size but not set the size of the layout. here don't preach the width of 0 is the cause of the above UITableViewCell set the default width is 320 (regardless of any screen), so if we pass the width of 0 will be according to the width of 320 to evaluate UITableViewCell dynamic height, so when in 375 and 375 the width of the assessment of height will not be right, so here you need to specify the real width dimension;And the height is set to 0 mean height is not a fixed value need to evaluate. you can use all type layout view to realize UITableViewCell.", @""),
                                   NSLocalizedString(@"This section not only has text but also hav picture. and picture below at text, text will wrap", @"")
@@ -98,10 +99,11 @@
     //设置所有cell的高度为高度自适应，如果cell高度是动态的请这么设置。 如果不同的cell有差异那么可以通过实现协议方法-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
     //如果您最低要支持到iOS7那么请您实现-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath方法来代替这个属性的设置。
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-    
-    
+
+    //MyLayout中的布局视图可以支持UITableViewCell的高度自适应的能力。这里注册两个cell，一个是不和AutoLayout结合的实现，一个是和AutoLayout结合的实现。至于使用哪种方式您可以二选一。
     [self.tableView registerClass:[AllTest1TableViewCell class] forCellReuseIdentifier:@"alltest1_cell"];
-    
+    [self.tableView registerClass:[AllTest1TableViewCellForAutoLayout class] forCellReuseIdentifier:@"alltest1_cell_forautolayout"];
+
     
     
     /**
@@ -114,7 +116,7 @@
      
      tableHeaderViewLayout.frame = CGRectMake(0, 0, self.tableView.frame.size.width, 100);
      
-      而如果某个布局视图的高度有可能是动态的高度，也就是用了wrapContentHeight为YES时，可以不用指定明确的指定高度，但要指定宽度。而且在布局视图添加到self.tableView.tableHeaderView 之前一定要记得调用：
+      而如果某个布局视图的高度有可能是动态的高度，也就是高度自适应，可以不用指定明确的指定高度，但要指定宽度。而且在布局视图添加到self.tableView.tableHeaderView 之前一定要记得调用：
             [tableHeaderViewLayout layoutIfNeeded]
      
      */
@@ -141,7 +143,10 @@
     //这个例子用来构建一个动态高度的头部布局视图。
     MyLinearLayout *tableHeaderViewLayout = [MyLinearLayout linearLayoutWithOrientation:MyOrientation_Vert];
     tableHeaderViewLayout.padding = UIEdgeInsetsMake(10, 10, 10, 10);
-    tableHeaderViewLayout.frame = CGRectMake(0, 0, CGRectGetWidth(self.tableView.bounds), 0); //高度不确定可以设置为0。但是宽度一定要写明确的值。尽量不要在代码中使用kScreenWidth,kScreenHeight，SCREEN_WIDTH。之类这样的宏来设定视图的宽度和高度。要充分利用MyLayout的特性，减少常数的使用。
+    /*在iOS14以前的viewDidLoad中self.view或者self.tableView的frame属性是有值的，但是到了iOS14以后其中的frame值就变为了CGRectZero了
+    所以这里要想取到正确的宽度，从iOS14以后起改为了获取self.navigationController.view.bounds。以前的历史版本是self.tableView.bounds
+     */
+    tableHeaderViewLayout.frame = CGRectMake(0, 0, CGRectGetWidth(self.navigationController.view.bounds), 0); //高度不确定可以设置为0。但是宽度一定要写明确的值。尽量不要在代码中使用kScreenWidth,kScreenHeight，SCREEN_WIDTH。之类这样的宏来设定视图的宽度和高度。要充分利用MyLayout的特性，减少常数的使用。
     tableHeaderViewLayout.myHorzMargin = 0; //这里注意设置宽度和父布局保持一致。
     tableHeaderViewLayout.backgroundImage = [UIImage imageNamed:@"bk1"];
     [tableHeaderViewLayout setTarget:self action:@selector(handleTableHeaderViewLayoutClick:)];
@@ -158,11 +163,11 @@
     
     
     UILabel *label2 = [UILabel new];
-    label2.text = NSLocalizedString(@" if you use layout view to realize the dynamic height tableHeaderView, please use frame to set view's width and use wrapContentHeight to set view's height. the layoutIfNeeded method is needed to call before the layout view assignment to the UITableview's tableHeaderView.", @"");
+    label2.text = NSLocalizedString(@" if you use layout view to realize the dynamic height tableHeaderView, please use frame to set view's width and set view's heightSize to MyLayoutSize.wrap. the layoutIfNeeded method is needed to call before the layout view assignment to the UITableview's tableHeaderView.", @"");
     label2.textColor = [CFTool color:4];
     label2.font = [CFTool font:15];
     label2.myHorzMargin = 5;
-    label2.wrapContentHeight = YES;
+    label2.myHeight = MyLayoutSize.wrap;
     label2.myTop = 10;
     [label2 sizeToFit];
     [tableHeaderViewLayout addSubview:label2];
@@ -193,7 +198,10 @@
     //这个例子用来构建一个固定高度的尾部布局视图。
     MyLinearLayout *tableFooterViewLayout = [MyLinearLayout linearLayoutWithOrientation:MyOrientation_Vert];
     tableFooterViewLayout.padding = UIEdgeInsetsMake(10, 10, 10, 10);
-    tableFooterViewLayout.frame = CGRectMake(0, 0, CGRectGetWidth(self.tableView.bounds), 80); //这里明确设定高度。
+    /*在iOS14以前的viewDidLoad中self.view或者self.tableView的frame属性是有值的，但是到了iOS14以后其中的frame值就变为了CGRectZero了
+    所以这里要想取到正确的宽度，从iOS14以后起改为了获取self.navigationController.view.bounds。以前的历史版本是self.tableView.bounds
+     */
+    tableFooterViewLayout.frame = CGRectMake(0, 0, CGRectGetWidth(self.navigationController.view.bounds), 80); //这里明确设定高度。
     tableFooterViewLayout.myHorzMargin = 0; //这里注意设置宽度和父布局保持一致。
     tableFooterViewLayout.backgroundColor = [CFTool color:6];
     tableFooterViewLayout.gravity = MyGravity_Vert_Center | MyGravity_Horz_Fill;
@@ -231,18 +239,12 @@
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
-    AllTest1TableViewCell *cell;
-    
-    if ([UIDevice currentDevice].systemVersion.floatValue < 8)
-    {
-     //如果您的系统要求最低支持到iOS7那么需要通过-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath 来评估高度，因此请不要使用- (__kindof UITableViewCell *)dequeueReusableCellWithIdentifier:(NSString *)identifier forIndexPath:(NSIndexPath *)indexPath 这个方法来初始化UITableviewCell，否则可能造成系统崩溃！！！
-        cell = (AllTest1TableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"alltest1_cell"];
-    }
-    else
-    {
-        //如果你最低支持到iOS8那么请用这个方法来初始化一个UITableviewCell,用这个方法要记得调用registerClass来注册UITableviewCell，否则可能会返回nil
-        cell = (AllTest1TableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"alltest1_cell" forIndexPath:indexPath];
-    }
+  //MyLayout中的布局视图可以支持UITableViewCell的高度自适应的能力。这里注册两个cell，一个是不和AutoLayout结合的实现，一个是和AutoLayout结合的实现。至于使用哪种方式您可以二选一。
+    NSString *identifiers[2] = {@"alltest1_cell", @"alltest1_cell_forautolayout"};
+        
+  //如果你最低支持到iOS8那么请用这个方法来初始化一个UITableviewCell,用这个方法要记得调用registerClass来注册UITableviewCell，否则可能会返回nil
+    //这里因为AllTest1TableViewCell和AllTest1TableViewCellForAutoLayout的方法名相同，所以这里虽然是两个不同的类，但是我们还是可以使用，你可以将下面的代码改为identifiers[1]试试AllTest1TableViewCellForAutoLayout这个cell类。
+    AllTest1TableViewCell *cell = (AllTest1TableViewCell*)[tableView dequeueReusableCellWithIdentifier:identifiers[0] forIndexPath:indexPath];
     
         
     AllTest1DataModel *model = [self.datas objectAtIndex:indexPath.row];
@@ -297,25 +299,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //如果您的系统最低支持到iOS7那么需要实现这个方法来算出每个UITableviewCell的动态高度。如果最低支持到iOS8那么您可以直接返回UITableViewAutomaticDimension，或者不实现这个方法而通过设置UITableView的rowHeight为UITableViewAutomaticDimension就可以了。
-    
-    if ([UIDevice currentDevice].systemVersion.floatValue < 8)
-    {
-        //这里注意一下：不是调用tableview的cellForRowAtIndexPath方法！！！！，而是调用的UITableviewDataSource的方法。
-        AllTest1TableViewCell *cell = (AllTest1TableViewCell*)[self tableView:tableView cellForRowAtIndexPath:indexPath];
-        
-        //通过布局视图的sizeThatFits函数能够评估出UITableViewCell的动态高度。sizeThatFits并不会进行布局
-        //而只是评估布局的尺寸，这里的宽度不传0的原因是上面的UITableViewCell在建立时默认的宽度是320(不管任何尺寸都如此),因此如果我们
-        //传递了宽度为0的话则会按320的宽度来评估UITableViewCell的动态高度，这样当在375和414的宽度时评估出来的高度将不会正确，因此这里需要
-        //指定出真实的宽度尺寸；而高度设置为0的意思是表示高度不是固定值需要评估出来。
-        CGSize size = [cell.rootLayout sizeThatFits:CGSizeMake(tableView.frame.size.width, 0)];
-        return size.height;  //如果使用系统自带的分割线，请返回size.height+1
-    }
-    else
-    {
-        return UITableViewAutomaticDimension;
-    }
-    
+    return UITableViewAutomaticDimension;
 }
 
 
@@ -332,10 +316,10 @@
 -(void)handleTableHeaderViewLayoutClick:(MyBaseLayout*)sender
 {
     UILabel *label1 = [sender viewWithTag:1000];
-    if (label1.myVisibility == MyVisibility_Visible)
-        label1.myVisibility = MyVisibility_Gone;
+    if (label1.visibility == MyVisibility_Visible)
+        label1.visibility = MyVisibility_Gone;
     else
-        label1.myVisibility = MyVisibility_Visible;
+        label1.visibility = MyVisibility_Visible;
     
     
     [UIView animateWithDuration:0.3 animations:^{

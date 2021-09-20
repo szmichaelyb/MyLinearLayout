@@ -27,11 +27,13 @@
 #import "RLTest3ViewController.h"
 #import "RLTest4ViewController.h"
 #import "RLTest5ViewController.h"
-
+#import "RLTest6ViewController.h"
 
 #import "TLTest1ViewController.h"
 #import "TLTest2ViewController.h"
 #import "TLTest3ViewController.h"
+#import "TLTest4ViewController.h"
+
 
 #import "FLLTest1ViewController.h"
 #import "FLLTest2ViewController.h"
@@ -39,6 +41,11 @@
 #import "FLLTest4ViewController.h"
 #import "FLLTest5ViewController.h"
 #import "FLLTest6ViewController.h"
+#import "FLLTest7ViewController.h"
+#import "FLLTest8ViewController.h"
+#import "FLLTest9ViewController.h"
+
+#import "FLXTest1ViewController.h"
 
 
 #import "AllTest1ViewController.h"
@@ -50,6 +57,10 @@
 #import "AllTest7ViewController.h"
 #import "AllTest8ViewController.h"
 #import "AllTest9ViewController.h"
+#import "AllTest10ViewController.h"
+#import "AllTest11ViewController.h"
+#import "AllTest12ViewController.h"
+#import "AllTestExampleViewController.h"
 
 
 #import "FOLTest1ViewController.h"
@@ -58,6 +69,8 @@
 #import "FOLTest4ViewController.h"
 #import "FOLTest5ViewController.h"
 #import "FOLTest6ViewController.h"
+#import "FOLTest7ViewController.h"
+
 
 #import "PLTest1ViewController.h"
 #import "PLTest2ViewController.h"
@@ -138,6 +151,9 @@
                                                },
                                              @{@"title":NSLocalizedString(@"5.RelativeLayout - Boundary limit", @""),
                                                @"class":[RLTest5ViewController class]
+                                               },
+                                             @{@"title":NSLocalizedString(@"6.RelativeLayout - MostSize&MostPos", @""),
+                                               @"class":[RLTest6ViewController class]
                                                }
                                              ]
                             },
@@ -152,6 +168,9 @@
                                                },
                                              @{@"title":NSLocalizedString(@"3.TableLayout - Intelligent Borderline", @""),
                                                @"class":[TLTest3ViewController class]
+                                               },
+                                             @{@"title":NSLocalizedString(@"4.TableLayout - Style&Alignment", @""),
+                                               @"class":[TLTest4ViewController class]
                                                }
                                              ]
                             },
@@ -175,10 +194,25 @@
                                                },
                                              @{@"title":NSLocalizedString(@"6.FlowLayout - Scroll", @""),
                                                @"class":[FLLTest6ViewController class]
+                                               },
+                                             @{@"title":NSLocalizedString(@"7.FlowLayout - Auto Arrange", @""),
+                                               @"class":[FLLTest7ViewController class]
+                                               },
+                                             @{@"title":NSLocalizedString(@"8.FlowLayout - Flex space", @""),
+                                               @"class":[FLLTest8ViewController class]
+                                               },
+                                             @{@"title":NSLocalizedString(@"9.FlowLayout - Line gravity", @""),
+                                               @"class":[FLLTest9ViewController class]
                                                }
                                              ]
                             },
-                          
+                          @{@"type_title":@"Flex布局(FlexLayout)",
+                            @"type_desc":@"fll.png",
+                            @"type_vclist":@[@{@"title":NSLocalizedString(@"1.FlexLayout - Flexlayout", @""),
+                                               @"class":[FLXTest1ViewController class]
+                                               }
+                                             ]
+                            },
                           @{@"type_title":@"浮动布局(FloatLayout)",
                             @"type_desc":@"flo.png",
                             @"type_vclist":@[@{@"title":NSLocalizedString(@"1.FloatLayout - Float", @""),
@@ -198,6 +232,9 @@
                                                },
                                              @{@"title":NSLocalizedString(@"6.FloatLayout - User Profiles", @""),
                                                @"class":[FOLTest6ViewController class]
+                                               },
+                                             @{@"title":NSLocalizedString(@"7.FloatLayout - Alignment", @""),
+                                               @"class":[FOLTest7ViewController class]
                                                }
                                              ]
                             },
@@ -270,6 +307,18 @@
                                                },
                                              @{@"title":NSLocalizedString(@"❁3.UICollectionView height self-adaption", @""),
                                                @"class":[AllTest9ViewController class]
+                                               },
+                                             @{@"title":NSLocalizedString(@"❁4.Circle of friends height self-adaption", @""),
+                                               @"class":[AllTest10ViewController class]
+                                               },
+                                             @{@"title":NSLocalizedString(@"❁5.Subviews layout transform", @""),
+                                               @"class":[AllTest11ViewController class]
+                                               },
+                                             @{@"title":NSLocalizedString(@"❁6.MyLayout & AutoLayout", @""),
+                                               @"class":[AllTest12ViewController class]
+                                               },
+                                             @{@"title":NSLocalizedString(@"❁7.example", @""),
+                                               @"class":[AllTestExampleViewController class]
                                                }
                                              ]
                             }

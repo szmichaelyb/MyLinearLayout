@@ -6,190 +6,134 @@
 //  Copyright (c) 2015年 YoungSoft. All rights reserved.
 //
 
-#import "MyLayoutMath.h"
 #import "MyLayoutDef.h"
+#import "MyLayoutMath.h"
 #import "MyLayoutPosInner.h"
-#import "MyLayoutSizeInner.h"
 #import "MyLayoutSizeClass.h"
+#import "MyLayoutSizeInner.h"
 
 
-//视图在布局中的评估测量值
-@interface MyFrame : NSObject
+typedef struct _MyLayoutContext {
+    
+    MyLayoutEngine *layoutViewEngine;
+    NSMutableArray<MyLayoutEngine *> *subviewEngines;
+    
+    //布局视图相关属性。
+    MySizeClass sizeClass;
+    CGSize selfSize;
+    CGFloat paddingLeading;
+    CGFloat paddingTrailing;
+    CGFloat paddingTop;
+    CGFloat paddingBottom;
+    BOOL isEstimate;
+    
+    MyGravity vertGravity;
+    MyGravity horzGravity;
+    
+    CGFloat horzSpace;
+    CGFloat vertSpace;
+    
+} MyLayoutContext;
 
-@property(nonatomic, assign) CGFloat top;
-@property(nonatomic, assign) CGFloat leading;
-@property(nonatomic, assign) CGFloat bottom;
-@property(nonatomic, assign) CGFloat trailing;
-@property(nonatomic, assign) CGFloat width;
-@property(nonatomic, assign) CGFloat height;
+@interface MyBaseLayout ()
 
-@property(nonatomic, weak) UIView *sizeClass;
-
-@property(nonatomic, assign, readonly) BOOL multiple; //是否设置了多个sizeclass
-
-@property(nonatomic, strong) NSMutableDictionary *sizeClasses;
-
-@property(nonatomic, assign) BOOL hasObserver;
-
--(void)reset;
-
-@property(nonatomic,assign) CGRect frame;
-
-@end
-
-
-
-@interface MyBaseLayout()
-
+@property (nonatomic, assign) BOOL isMyLayouting;
 
 //派生类重载这个函数进行布局
--(CGSize)calcLayoutRect:(CGSize)size isEstimate:(BOOL)isEstimate pHasSubLayout:(BOOL*)pHasSubLayout sizeClass:(MySizeClass)sizeClass sbs:(NSMutableArray*)sbs;
+- (CGSize)calcLayoutSize:(CGSize)size subviewEngines:(NSMutableArray *)subviewEngines context:(MyLayoutContext *)context;
 
--(id)createSizeClassInstance;
+- (id)createSizeClassInstance;
 
-
-//判断margin是否是相对margin
--(BOOL)myIsRelativePos:(CGFloat)margin;
-
--(MyGravity)myGetSubviewVertGravity:(UIView*)sbv sbvsc:(UIView*)sbvsc vertGravity:(MyGravity)vertGravity;
-
-
--(void)myCalcVertGravity:(MyGravity)vert
-                     sbv:(UIView *)sbv
-                   sbvsc:(UIView*)sbvsc
-              paddingTop:(CGFloat)paddingTop
-           paddingBottom:(CGFloat)paddingBottom
+- (CGFloat)myCalcSubview:(MyLayoutEngine *)subviewEngine
+             vertGravity:(MyGravity)vertGravity
              baselinePos:(CGFloat)baselinePos
-                selfSize:(CGSize)selfSize
-                   pRect:(CGRect*)pRect;
+                 withContext:(MyLayoutContext *)context;
 
--(MyGravity)myGetSubviewHorzGravity:(UIView*)sbv sbvsc:(UIView*)sbvsc horzGravity:(MyGravity)horzGravity;
+- (CGFloat)myCalcSubview:(MyLayoutEngine *)subviewEngine
+             horzGravity:(MyGravity)horz
+                 withContext:(MyLayoutContext *)context;
+
+- (CGFloat)mySubview:(MyViewTraits *)subviewTraits wrapHeightSizeFits:(CGSize)size withContext:(MyLayoutContext *)context;
+
+- (CGFloat)myGetBoundLimitMeasure:(MyLayoutSize *)anchor subview:(UIView *)subview anchorType:(MyLayoutAnchorType)anchorType subviewSize:(CGSize)subviewSize selfLayoutSize:(CGSize)selfLayoutSize isUBound:(BOOL)isUBound;
+
+- (CGFloat)myValidMeasure:(MyLayoutSize *)anchor subview:(UIView *)subview calcSize:(CGFloat)calcSize subviewSize:(CGSize)subviewSize selfLayoutSize:(CGSize)selfLayoutSize;
+
+- (CGFloat)myValidMargin:(MyLayoutPos *)anchor subview:(UIView *)subview calcPos:(CGFloat)calcPos selfLayoutSize:(CGSize)selfLayoutSize;
+
+- (NSArray *)myUpdateCurrentSizeClass:(MySizeClass)sizeClass subviews:(NSArray<UIView *> *)subviews;
 
 
--(void)myCalcHorzGravity:(MyGravity)horz
-                     sbv:(UIView *)sbv
-                   sbvsc:(UIView*)sbvsc
-          paddingLeading:(CGFloat)paddingLeading
-         paddingTrailing:(CGFloat)paddingTrailing
-                selfSize:(CGSize)selfSize
-                   pRect:(CGRect*)pRect;
-
--(void)myCalcSizeOfWrapContentSubview:(UIView*)sbv sbvsc:(UIView*)sbvsc sbvmyFrame:(MyFrame*)sbvmyFrame;
-
--(CGFloat)myHeightFromFlexedHeightView:(UIView*)sbv sbvsc:(UIView*)sbvsc inWidth:(CGFloat)width;
-
--(CGFloat)myValidMeasure:(MyLayoutSize*)dime sbv:(UIView*)sbv calcSize:(CGFloat)calcSize sbvSize:(CGSize)sbvSize selfLayoutSize:(CGSize)selfLayoutSize;
-
--(CGFloat)myValidMargin:(MyLayoutPos*)pos sbv:(UIView*)sbv calcPos:(CGFloat)calcPos selfLayoutSize:(CGSize)selfLayoutSize;
-
--(BOOL)myIsNoLayoutSubview:(UIView*)sbv;
-
--(NSMutableArray*)myGetLayoutSubviews;
--(NSMutableArray*)myGetLayoutSubviewsFrom:(NSArray*)sbsFrom;
-
-//设置子视图的相对依赖的尺寸
--(void)mySetSubviewRelativeDimeSize:(MyLayoutSize*)dime selfSize:(CGSize)selfSize lsc:(MyBaseLayout*)lsc pRect:(CGRect*)pRect;
-
--(CGSize)myAdjustSizeWhenNoSubviews:(CGSize)size sbs:(NSArray*)sbs lsc:(MyBaseLayout*)lsc;
-
-- (void)myAdjustLayoutSelfSize:(CGSize *)pSelfSize lsc:(MyBaseLayout*)lsc;
-
--(void)myAdjustSubviewsRTLPos:(NSArray*)sbs selfWidth:(CGFloat)selfWidth;
-
--(MyGravity)myConvertLeftRightGravityToLeadingTrailing:(MyGravity)horzGravity;
+- (CGSize)myAdjustLayoutViewSizeWithContext:(MyLayoutContext *)context;
 
 //为支持iOS11的safeArea而进行的padding的转化
--(CGFloat)myLayoutTopPadding;
--(CGFloat)myLayoutBottomPadding;
--(CGFloat)myLayoutLeftPadding;
--(CGFloat)myLayoutRightPadding;
--(CGFloat)myLayoutLeadingPadding;
--(CGFloat)myLayoutTrailingPadding;
+- (CGFloat)myLayoutPaddingTop;
+- (CGFloat)myLayoutPaddingBottom;
+- (CGFloat)myLayoutPaddingLeft;
+- (CGFloat)myLayoutPaddingRight;
+- (CGFloat)myLayoutPaddingLeading;
+- (CGFloat)myLayoutPaddingTrailing;
 
--(void)myAdjustSubviewWrapContentSet:(UIView*)sbv isEstimate:(BOOL)isEstimate sbvmyFrame:(MyFrame*)sbvmyFrame sbvsc:(UIView*)sbvsc selfSize:(CGSize)selfSize sizeClass:(MySizeClass)sizeClass pHasSubLayout:(BOOL*)pHasSubLayout;
+- (void)myAdjustSizeSettingOfSubviewEngine:(MyLayoutEngine *)subviewEngine withContext:(MyLayoutContext *)context;
 
+//根据子视图的宽度约束得到宽度值
+- (CGFloat)myWidthSizeValueOfSubviewEngine:(MyLayoutEngine *)subviewEngine
+                               withContext:(MyLayoutContext *)context;
 
--(void)myCalcSubViewRect:(UIView*)sbv
-                   sbvsc:(UIView*)sbvsc
-              sbvmyFrame:(MyFrame*)sbvmyFrame
-                     lsc:(MyBaseLayout*)lsc
-             vertGravity:(MyGravity)vertGravity
-             horzGravity:(MyGravity)horzGravity
-              inSelfSize:(CGSize)selfSize
-              paddingTop:(CGFloat)paddingTop
-          paddingLeading:(CGFloat)paddingLeading
-           paddingBottom:(CGFloat)paddingBottom
-         paddingTrailing:(CGFloat)paddingTrailing
-            pMaxWrapSize:(CGSize*)pMaxWrapSize;
+//根据子视图的高度约束得到高度值
+- (CGFloat)myHeightSizeValueOfSubviewEngine:(MyLayoutEngine *)subviewEngine
+                                withContext:(MyLayoutContext *)context;
 
--(UIFont*)myGetSubviewFont:(UIView*)sbv;
+- (void)myCalcRectOfSubviewEngine:(MyLayoutEngine *)subviewEngine
+                pMaxWrapSize:(CGSize *)pMaxWrapSize
+                 withContext:(MyLayoutContext *)context;
 
--(MySizeClass)myGetGlobalSizeClass;
+- (UIFont *)myGetSubviewFont:(UIView *)subview;
 
+- (MySizeClass)myGetGlobalSizeClass;
+
+//给父布局视图机会来更改子布局视图的边界线的显示的rect
+- (void)myHookSublayout:(MyBaseLayout *)sublayout borderlineRect:(CGRect *)pRect;
+
+- (void)myCalcSubviewsWrapContentSize:(MyLayoutContext *)context withCustomSetting:(void (^)(MyViewTraits *subviewTraits))customSetting;
+
+@end
+
+@interface MyViewTraits ()
+
+@property (nonatomic, strong, readonly) MyLayoutPos *topPosInner;
+@property (nonatomic, strong, readonly) MyLayoutPos *leadingPosInner;
+@property (nonatomic, strong, readonly) MyLayoutPos *bottomPosInner;
+@property (nonatomic, strong, readonly) MyLayoutPos *trailingPosInner;
+@property (nonatomic, strong, readonly) MyLayoutPos *centerXPosInner;
+@property (nonatomic, strong, readonly) MyLayoutPos *centerYPosInner;
+@property (nonatomic, strong, readonly) MyLayoutSize *widthSizeInner;
+@property (nonatomic, strong, readonly) MyLayoutSize *heightSizeInner;
+
+@property (nonatomic, strong, readonly) MyLayoutPos *leftPosInner;
+@property (nonatomic, strong, readonly) MyLayoutPos *rightPosInner;
+
+@property (nonatomic, strong, readonly) MyLayoutPos *baselinePosInner;
+
+@property (class, nonatomic, assign) BOOL isRTL;
+
+@end
+
+//为了减少布局视图不必要的内存占用，这里将一些可选数据保存到这个类中来
+@interface MyBaseLayoutOptionalData : NSObject
+
+//特定场景处理的回调block
+@property (nonatomic, copy) void (^beginLayoutBlock)(void);
+@property (nonatomic, copy) void (^endLayoutBlock)(void);
+@property (nonatomic, copy) void (^rotationToDeviceOrientationBlock)(MyBaseLayout *layout, BOOL isFirst, BOOL isPortrait);
+@property (nonatomic, assign) int lastScreenOrientation; //为0为初始状态，为1为竖屏，为2为横屏。内部使用。
+
+//动画扩展
+@property (nonatomic, assign) NSTimeInterval aniDuration;
+@property (nonatomic, assign) UIViewAnimationOptions aniOptions;
+@property (nonatomic, copy) void (^aniCompletion)(BOOL finished);
 
 @end
 
 
 
-@interface MyViewSizeClass()
-
-@property(nonatomic, strong,readonly)  MyLayoutPos *topPosInner;
-@property(nonatomic, strong,readonly)  MyLayoutPos *leadingPosInner;
-@property(nonatomic, strong,readonly)  MyLayoutPos *bottomPosInner;
-@property(nonatomic, strong,readonly)  MyLayoutPos *trailingPosInner;
-@property(nonatomic, strong,readonly)  MyLayoutPos *centerXPosInner;
-@property(nonatomic, strong,readonly)  MyLayoutPos *centerYPosInner;
-@property(nonatomic, strong,readonly)  MyLayoutSize *widthSizeInner;
-@property(nonatomic, strong,readonly)  MyLayoutSize *heightSizeInner;
-
-@property(nonatomic, strong,readonly)  MyLayoutPos *leftPosInner;
-@property(nonatomic, strong,readonly)  MyLayoutPos *rightPosInner;
-
-@property(nonatomic, strong,readonly)  MyLayoutPos *baselinePosInner;
-
-
-#if UIKIT_DEFINE_AS_PROPERTIES
-@property(class, nonatomic, assign) BOOL isRTL;
-#else
-+(BOOL)isRTL;
-+(void)setIsRTL:(BOOL)isRTL;
-#endif
-
-@end
-
-
-@interface UIView(MyLayoutExtInner)
-
-@property(nonatomic, strong, readonly) MyFrame *myFrame;
-
-
--(instancetype)myDefaultSizeClass;
-
--(instancetype)myBestSizeClass:(MySizeClass)sizeClass;
-
--(instancetype)myCurrentSizeClass;
-
--(instancetype)myCurrentSizeClassInner;
-
-
--(instancetype)myCurrentSizeClassFrom:(MyFrame*)myFrame;
-
--(id)createSizeClassInstance;
-
-
-@property(nonatomic, readonly)  MyLayoutPos *topPosInner;
-@property(nonatomic, readonly)  MyLayoutPos *leadingPosInner;
-@property(nonatomic, readonly)  MyLayoutPos *bottomPosInner;
-@property(nonatomic, readonly)  MyLayoutPos *trailingPosInner;
-@property(nonatomic, readonly)  MyLayoutPos *centerXPosInner;
-@property(nonatomic, readonly)  MyLayoutPos *centerYPosInner;
-@property(nonatomic, readonly)  MyLayoutSize *widthSizeInner;
-@property(nonatomic, readonly)  MyLayoutSize *heightSizeInner;
-
-@property(nonatomic, readonly)  MyLayoutPos *leftPosInner;
-@property(nonatomic, readonly)  MyLayoutPos *rightPosInner;
-
-@property(nonatomic, readonly)  MyLayoutPos *baselinePosInner;
-
-
-@end

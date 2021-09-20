@@ -2,7 +2,7 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![License](https://img.shields.io/cocoapods/l/MyLayout.svg?style=flat)](http://cocoapods.org/pods/MyLayout)
 [![Platform](https://img.shields.io/cocoapods/p/MyLayout.svg?style=flat)](http://cocoapods.org/pods/MyLayout)
-[![Support](https://img.shields.io/badge/support-iOS%205%2B%20-blue.svg?style=flat)](https://www.apple.com/nl/ios/)
+[![Support](https://img.shields.io/badge/support-iOS%208%2B%20-blue.svg?style=flat)](https://www.apple.com/nl/ios/)
 [![Weibo](https://img.shields.io/badge/Sina微博-@欧阳大哥2013-yellow.svg?style=flat)](http://weibo.com/1411091507)
 [![QQ](https://img.shields.io/badge/QQ-156355113-yellow.svg?style=flat)]()
 [![GitHub stars](https://img.shields.io/github/stars/youngsoft/MyLinearLayout.svg)](https://github.com/youngsoft/MyLinearLayout/stargazers)
@@ -28,7 +28,7 @@ MyLayout是一套iOS界面视图布局框架。MyLayout的内核是基于对UIVi
 [http://www.jianshu.com/p/fbeb376584ed](http://www.jianshu.com/p/fbeb376584ed) 流式布局  
 [http://www.jianshu.com/p/0c075f2fdab2](http://www.jianshu.com/p/0c075f2fdab2) 浮动布局
 [http://www.jianshu.com/p/4ac229057396](http://www.jianshu.com/p/4ac229057396) 路径布局
-[http://bicyclering.com/2017/09/01/IOS-UIViewLayout-%E5%B8%83%E5%B1%80-MyLinearLayout/#more](http://bicyclering.com/2017/09/01/IOS-UIViewLayout-%E5%B8%83%E5%B1%80-MyLinearLayout/#more) 栅格布局
+[https://bicyclering.github.io/](https://bicyclering.github.io/2017/09/01/IOS/(UIViewLayout)%E5%B8%83%E5%B1%80/MyLinearLayout/#more) 栅格布局
 
 ### MyLayout的优势
 * MyLayout的实现内核是基于frame的设置，而不是对AutoLayout的封装。因此在使用上不会受到任何操作系统版本的限制。
@@ -158,8 +158,7 @@ MyLayoutSize类是用来描述一个视图的尺寸的类。UIView中扩展出�
 示例代码:
 
 ```objective-c
--(void)loadView
-{
+-(void)loadView {
     [super loadView];
     
     MyLinearLayout *S = [MyLinearLayout linearLayoutWithOrientation:MyOrientation_Vert];
@@ -167,23 +166,22 @@ MyLayoutSize类是用来描述一个视图的尺寸的类。UIView中扩展出�
     S.subviewSpace = 10;
     
     UIView *A = [UIView new];
-    A.myLeft = A.myRight = 5;
+    A.myHorzMargin = 5;
     A.myHeight = 40;
     [S addSubview:A];
     
     UIView *B = [UIView new];
     B.myLeft = 20;
-    B.myWidth = B.myHeight = 40;
+    B.mySize = CGSizeMake(40,40);
     [S addSubview:B];
     
     UIView *C = [UIView new];
     C.myRight = 40;
-    C.myWidth = 50;
-    C.myHeight = 40;
+    C.mySize = CGSizeMake(50,40);
     [S addSubview:C];
     
     UIView *D = [UIView new];
-    D.myLeft = D.myRight = 10;
+    D.myHorzMargin = 10;
     D.myHeight = 40;
     [S addSubview:D];
     
@@ -194,7 +192,6 @@ MyLayoutSize类是用来描述一个视图的尺寸的类。UIView中扩展出�
     C.backgroundColor = [UIColor orangeColor];
     D.backgroundColor = [UIColor cyanColor];
  }
-
 ```
 
 
@@ -208,8 +205,7 @@ MyLayoutSize类是用来描述一个视图的尺寸的类。UIView中扩展出�
 示例代码:
 
 ```objective-c
--(void)loadView
-{
+-(void)loadView {
     [super loadView];
     
     MyRelativeLayout *S = [MyRelativeLayout new];
@@ -275,8 +271,7 @@ MyLayoutSize类是用来描述一个视图的尺寸的类。UIView中扩展出�
 示例代码:
 
 ```objective-c
- -(void)loadView
-{
+ -(void)loadView {
     [super loadView];
     
     MyFrameLayout *S = [MyFrameLayout new];
@@ -325,16 +320,15 @@ MyLayoutSize类是用来描述一个视图的尺寸的类。UIView中扩展出�
 示例代码:
 
 ```objective-c
-  -(void)loadView
-{
+-(void)loadView {
     [super loadView];
     
     MyTableLayout *S = [MyTableLayout tableLayoutWithOrientation:MyOrientation_Vert];
-    S.wrapContentWidth = YES;
+    S.myWidth = MyLayoutSize.wrap;
     S.subviewHSpace = 10;
     S.subviewVSpace = 10;
     
-    [S addRow:MTLSIZE_WRAPCONTENT colSize:MTLSIZE_WRAPCONTENT];
+    [S addRow:MyLayoutSize.wrap colSize:MyLayoutSize.wrap];
     
     UIView *A = [UIView new];
     A.mySize = CGSizeMake(50,40);
@@ -348,7 +342,7 @@ MyLayoutSize类是用来描述一个视图的尺寸的类。UIView中扩展出�
     C.mySize = CGSizeMake(30,40);
     [S addSubview:C];
     
-    [S addRow:MTLSIZE_WRAPCONTENT colSize:MTLSIZE_WRAPCONTENT];
+    [S addRow:MyLayoutSize.wrap colSize:MyLayoutSize.wrap];
     
     UIView *D = [UIView new];
     D.mySize = CGSizeMake(200,40);
@@ -381,12 +375,11 @@ MyLayoutSize类是用来描述一个视图的尺寸的类。UIView中扩展出�
 
 ```objective-c
    
-  -(void)loadView
-{
+  -(void)loadView {
     [super loadView];
     
     MyFlowLayout *S = [MyFlowLayout flowLayoutWithOrientation:MyOrientation_Vert arrangedCount:4];
-    S.wrapContentHeight = YES;
+    S.myHeight = MyLayoutSize.wrap;
     S.myWidth = 300;
     S.padding = UIEdgeInsetsMake(10, 10, 10, 10);
     S.gravity = MyGravity_Horz_Fill;
@@ -406,10 +399,6 @@ MyLayoutSize类是用来描述一个视图的尺寸的类。UIView中扩展出�
     [self.view addSubview:S];
     S.backgroundColor = [UIColor redColor];
 }
-
-   
-   
-
 ```
 
 
@@ -424,15 +413,14 @@ MyLayoutSize类是用来描述一个视图的尺寸的类。UIView中扩展出�
 示例代码:
 
 ```objective-c
-      -(void)loadView
-{
+  -(void)loadView {
     [super loadView];
     
     MyFloatLayout *S  = [MyFloatLayout floatLayoutWithOrientation:MyOrientation_Vert];
-    S.wrapContentHeight = YES;
+    S.myHeight = MyLayoutSize.wrap;
+    S.myWidth = 300;
     S.padding = UIEdgeInsetsMake(10, 10, 10, 10);
     S.subviewSpace = 10;
-    S.myWidth = 300;
     
     UIView *A = [UIView new];
     A.mySize = CGSizeMake(80,70);
@@ -469,8 +457,7 @@ MyLayoutSize类是用来描述一个视图的尺寸的类。UIView中扩展出�
     E.backgroundColor = [UIColor blackColor];
     F.backgroundColor = [UIColor whiteColor];
 }     
-     
-
+    
 ```
 
 
@@ -486,8 +473,7 @@ MyLayoutSize类是用来描述一个视图的尺寸的类。UIView中扩展出�
 示例代码:
  
  ```objective-c
-   -(void)loadView
-{
+   -(void)loadView {
     [super loadView];
     
     MyPathLayout *S = [MyPathLayout new];
@@ -495,13 +481,11 @@ MyLayoutSize类是用来描述一个视图的尺寸的类。UIView中扩展出�
     S.coordinateSetting.isReverse = YES;
     S.coordinateSetting.origin = CGPointMake(0.5, 0.2);
     
-    S.polarEquation = ^(CGFloat angle)
-    {
+    S.polarEquation = ^(CGFloat angle) {
         return 80 * (1 + cos(angle));
     };
     
-    for (int i = 0; i < 4; i++)
-    {
+    for (int i = 0; i < 4; i++) {
         UIView *A = [UIView new];
         A.mySize = CGSizeMake(40,40);
         [S addSubview:A];
@@ -526,8 +510,7 @@ MyLayoutSize类是用来描述一个视图的尺寸的类。UIView中扩展出�
    示例代码:
  
  ```objective-c
-   -(void)loadView
-{
+ -(void)loadView {
     [super loadView];
     
     MyGridLayout *S = [MyGridLayout new];
@@ -588,14 +571,14 @@ MyLayout布局体系为了实现对不同屏幕尺寸的设备进行适配，提
 //默认所有设备的设置。
  MyLinearLayout *rootLayout = [MyLinearLayout linearLayoutWithOrientation:MyOrientation_Vert];
     rootLayout.padding = UIEdgeInsetsMake(10, 10, 10, 10);
-    rootLayout.wrapContentHeight = NO;
+    rootLayout.myHeight = MyLayoutSize.empty;
     rootLayout.gravity = MyGravity_Horz_Fill;
 
 //MySizeClass_wAny | MySizeClass_hCompact 表明的是iPhone设备的横屏.
  MyLinearLayout *lsc = [rootLayout fetchLayoutSizeClass:MySizeClass_wAny | MySizeClass_hCompact copyFrom:MySizeClass_wAny | MySizeClass_hAny];
  
     lsc.orientation = MyOrientation_Horz;
-    lsc.wrapContentWidth = NO;
+    lsc.myWidth = MyLayoutSize.empty;
     lsc.gravity = MyGravity_Vert_Fill;
 
 
@@ -622,7 +605,7 @@ $ gem install cocoapods
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '7.0'
 
-pod 'MyLayout', '~> 1.5.0'
+pod 'MyLayout'
 ```
    
 然后运行如下命令:
@@ -650,7 +633,19 @@ $ pod install
     
     $(SRCROOT)/Carthage/Build/iOS/MyLayout.framework
     
+    
+##  问题列表
+1. 布局完成后如何得到布局视图的尺寸尤其是高度？
+MyLayout的布局设置和AutoLayout的约束设置是一样的，并不会立即进行布局。因此设置完约束后立即读取frame值将不是想要的结果。为了获取布局设置后的视图尺寸值一共有4个方法：
+  *  对布局视图调用尺寸评估方法: `sizeThatFits:` 并传递CGSizeMake(明确的宽度值,0) 作为参数，系统将返回布局评估后所得到的尺寸，你可以从返回值中得到布局评估后的高度值。如果你想获得布局视图里面子视图的评估尺寸和位置时可以通过`estimatedRect`属性来获取。
+  *  可以调用布局视图的`layoutIfNeeded`方法来进行立即的布局处理，然后通过布局视图和子视图的frame属性就可以得到真实的视图尺寸和位置值。在使用layoutIfNeeded方法时，要求布局视图的frame属性值必须要设置明确的宽度值，否则布局计算的结果将不一定正确。这个方法和上面方法类似前者是评估后者是真实计算，共同点是都要求指定明确的宽度值。
+  *  通过KVO的方式来监视布局视图的isMyLayouting属性来获取每次布局完成后的布局视图以及子视图的真实frame值。
+  *  通过为布局视图设置endLayoutBlock或者为子视图设置viewLayoutCompleteBlock来得到一次布局完成后布局视图或者子视图的frame值。这个方法得到的frame有可能会不准确，因此它只是第一次布局的结果。
 
+
+2. 布局后运行时出现CPU的100%占用并最终崩溃在layoutSubviews方法中。这个问题的原因就是约束冲突了，最常见的就是布局视图依赖子视图的尺寸，而子视图又依赖父视图的尺寸导致的布局尺寸循环计算更新。解决的方法就是检查父子视图之间的约束是否存在相互依赖的情况并取消相互依赖即可。
+
+3. 在线性布局MyLinearLayout中的子视图的MyLayoutPos属性值设置为大于0小于1的小数时，它所表示的意思并不是一个绝对间距或者边距而是一个相对间距和边距值。这样的设定是由于历史原因导致的不合理的设定。比如在垂直线性布局中有a,b,c,d四个子视图，我们希望c,d两个子视图落地布局视图的底端而不是跟在b的后面。这时候我们只需要设置c.myTop为从大于0到小于1之间的任何小数都可以实现这个功能，虽然这样的设置方法和奇葩！。同时我们也可以通过设定b.myBottom=0.5以及c.myTop=0.5这样的方式来达到目的，而这样的设定将会更加容易理解一些。
 
 
 ## 版本历史
