@@ -106,15 +106,30 @@
     v2.heightSize.equalTo(@50);
     /// v2.centerYPos.equalTo(@0);
     /// v2.myCenter = CGPointZero;
-    v2.myCenterY = 0;
+    /// v2.myCenterY = 0;
     [layout addSubview:v2];
     
+    UIView *v3 = [self createLabel:@"C" backgroundColor:[CFTool color:7]];
+    v3.widthSize.equalTo(@50);
+    v3.heightSize.equalTo(@50);
+    /// v3.centerYPos.equalTo(@0);
+    /// v3.myCenter = CGPointZero;
+    /// v3.myCenterY = 0;
+    /// v3.myCenterX = 0;
+    [layout addSubview:v3];
+    
     /// 通过为centerXPos等于一个数组值，表示v1和v2在父布局视图之内整体水平居中,这里的20表示v1和v2之间还有20的间隔。
-    v1.centerXPos.equalTo(@[v2.centerXPos.offset(20)]);
+    /// v1.centerXPos.equalTo(@[v2.centerXPos.offset(20)]);
     /// v1.centerXPos.equalTo(@[v2.centerXPos]);
     /// TODO: 注意本行代码与上面代码的区别。上面方式设置，两子视图不会重叠，因为中心点没有重合。下面方式会导致中心点会重合
     /// v1.myCenterX = v2.myCenterX = 0;
     
+    /// v2.centerYPos.equalTo(@[v1.centerYPos.offset(20)]);
+    /// v3.centerXPos.equalTo(@[v2.centerXPos]);
+    
+    v1.centerXPos.equalTo(@[v2.centerXPos.offset(20)]);
+    v2.centerYPos.equalTo(@[v3.centerYPos.offset(20)]);
+    v3.centerXPos.equalTo(v2.centerXPos);
     
     return layout;
 }
@@ -187,6 +202,8 @@
     lb1up.centerYPos.equalTo(@[lb1down.centerYPos.offset(10)]);
     lb2up.centerYPos.equalTo(@[lb2down.centerYPos.offset(10)]);
     lb3up.centerYPos.equalTo(@[lb3down.centerYPos.offset(10)]);
+    
+    lb1down.visibility = MyVisibility_Gone;
     
     /// 上面的三个视图整体水平居中显示并且间隔60
     lb1up.centerXPos.equalTo(@[lb2up.centerXPos.offset(60),lb3up.centerXPos.offset(60)]);

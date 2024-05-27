@@ -114,7 +114,8 @@
     /// 最新版本的相对布局可以让子视图的位置设置为某些视图位置中的最大或者最小值，也就是最值，我们可以对一个数组调用扩展分类的方法myMaxPos或者myMinPos来获取
     /// 到数组中元素的最大或者最小位置值。使用最大最小值的前提是在计算当前位置的约束时，要求数组中的元素的约束都是已经计算好了的，否则得到的结果是未可知，就如本例中
     /// 在计算clickButton的右边距时，detailLabel以及nameLabel的右边距都是已经计算好了的。
-    /// TODO: `已经计算好`，其实就是已经设置好了的意思
+    /// TODO: `已经计算好`，其实就是已经设置好了的意思。
+    /// 代码确实很绕，需要仔细理解
     clickButton.rightPos.equalTo(@[detailLabel.rightPos,nameLabel.rightPos.clone(-1*(40+clickButton.frame.size.width))].myMaxPos);
     [rootLayout addSubview:clickButton];
     
