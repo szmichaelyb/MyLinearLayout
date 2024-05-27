@@ -198,7 +198,8 @@
         trailingLabel.topPos.equalTo(leadingImageView.topPos).offset(4);
         [containerLayout addSubview:trailingLabel];
         
-        flexedLabel.widthSize.equalTo(flexedLabel.widthSize); //宽度等于自身的宽度
+        /// flexedLabel.widthSize.equalTo(flexedLabel.widthSize); //宽度等于自身的宽度
+        flexedLabel.widthSize.equalTo(@(MyLayoutSize.wrap)); //宽度等于自身的宽度
         flexedLabel.trailingPos.uBound(trailingLabel.leadingPos, editImageView.frame.size.width + 10); //右边的最大的边界就等于trailingLabel的最左边再减去editImageView的尺寸外加上10,这里的10是视图之间的间距，为了让视图之间保持有足够的间距。这样当flexedLabel的宽度超过这个最大的右边界时，系统自动会缩小flexedLabel的宽度，以便来满足右边界的限制。 这个场景非常适合某个UITableViewCell里面的两个子视图之间有尺寸长度约束的情况。
         
         

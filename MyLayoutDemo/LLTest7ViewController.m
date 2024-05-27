@@ -140,7 +140,9 @@
 -(void)handleAction:(UIButton*)sender
 {
     //恢复原来的设置。
-   NSArray *arr = self.testLayout.subviews;
+    NSArray *arr = self.testLayout.subviews;
+    self.testLayout.orientation = MyOrientation_Horz;
+    
     
     UIView *v1 = arr[0];
     UIView *v2 = arr[1];
@@ -150,9 +152,9 @@
     [v2 resetMyLayoutSetting];
     [v3 resetMyLayoutSetting];
     
-    v1.myHeight = 100;
+    v1.myHeight = 50;/// 100;
     v2.myHeight = 50;
-    v3.myHeight = 70;
+    v3.myHeight = 50;/// 70;
     
     
     //清除所有横屏模式下的布局约束设置。
@@ -174,11 +176,11 @@
             [self.testLayout equalizeSubviews:YES inSizeClass:MySizeClass_Landscape];  //均分所有子视图的尺寸和间距保留最外间距,横屏模式
             break;
         case 300:
-            [self.testLayout equalizeSubviews:NO withSpace:40]; //均分所有子视图尺寸，固定间距，不保留最外间距
+            [self.testLayout equalizeSubviews:NO withSpace:5]; //均分所有子视图尺寸，固定间距，不保留最外间距
             [self.testLayout equalizeSubviews:NO withSpace:40 inSizeClass:MySizeClass_Landscape]; //均分所有子视图尺寸，固定间距，不保留最外间距,横屏模式
             break;
         case 400:
-            [self.testLayout equalizeSubviews:YES withSpace:40];  //均分所有子视图尺寸，固定间距，保留最外间距
+            [self.testLayout equalizeSubviews:YES withSpace:5];  //均分所有子视图尺寸，固定间距，保留最外间距
             [self.testLayout equalizeSubviews:YES withSpace:40 inSizeClass:MySizeClass_Landscape];  //均分所有子视图尺寸，固定间距，保留最外间距,横屏模式
             break;
         case 500:

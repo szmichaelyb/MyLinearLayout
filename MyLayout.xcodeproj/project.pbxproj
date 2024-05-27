@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -182,6 +182,7 @@
 		4689881F23430AA000BFE829 /* MyGridLayoutTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4689881E23430AA000BFE829 /* MyGridLayoutTestCase.m */; };
 		4689882223449E8300BFE829 /* RLTest6ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4689882123449E8300BFE829 /* RLTest6ViewController.m */; };
 		46898847236733AC00BFE829 /* FLLTest9ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46898846236733AC00BFE829 /* FLLTest9ViewController.m */; };
+		52DC0801501B7F09A674FA6E /* Pods_MyLayoutDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A3AD88218AC112123CC3EF /* Pods_MyLayoutDemo.framework */; };
 		6740E1F820A52D9E00AFBC5A /* AllTest10ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6740E1F620A52D9E00AFBC5A /* AllTest10ViewController.m */; };
 		6740E1FB20A52DA900AFBC5A /* AllTest10Model.m in Sources */ = {isa = PBXBuildFile; fileRef = 6740E1F920A52DA900AFBC5A /* AllTest10Model.m */; };
 		6740E1FE20A52DB100AFBC5A /* AllTest10HeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6740E1FC20A52DB000AFBC5A /* AllTest10HeaderView.m */; };
@@ -428,6 +429,7 @@
 		20F0DFFF21120A8D00CFCE8C /* FLLTest8ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FLLTest8ViewController.m; sourceTree = "<group>"; };
 		20F783541F60398C00BE5B31 /* GLTest3ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLTest3ViewController.h; sourceTree = "<group>"; };
 		20F783551F60399700BE5B31 /* GLTest3ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLTest3ViewController.m; sourceTree = "<group>"; };
+		3629FA5F5CADED97FC05A568 /* Pods-MyLayoutDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyLayoutDemo.debug.xcconfig"; path = "Target Support Files/Pods-MyLayoutDemo/Pods-MyLayoutDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		4411977A1F6AE78E00C22557 /* GridLayoutDemo5.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = GridLayoutDemo5.json; sourceTree = "<group>"; };
 		444B718F1F6A3E3F00331872 /* GLTest5ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLTest5ViewController.h; sourceTree = "<group>"; };
 		444B71901F6A3E3F00331872 /* GLTest5ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLTest5ViewController.m; sourceTree = "<group>"; };
@@ -452,6 +454,8 @@
 		6740E1FD20A52DB000AFBC5A /* AllTest10HeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllTest10HeaderView.h; sourceTree = "<group>"; };
 		6740E1FF20A52DC100AFBC5A /* AllTest10Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllTest10Cell.m; sourceTree = "<group>"; };
 		6740E20020A52DC100AFBC5A /* AllTest10Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllTest10Cell.h; sourceTree = "<group>"; };
+		78A3AD88218AC112123CC3EF /* Pods_MyLayoutDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyLayoutDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CBD8C7F4D906BDA19BECB2A5 /* Pods-MyLayoutDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyLayoutDemo.release.xcconfig"; path = "Target Support Files/Pods-MyLayoutDemo/Pods-MyLayoutDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -466,6 +470,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52DC0801501B7F09A674FA6E /* Pods_MyLayoutDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -495,6 +500,7 @@
 				18B152321DEDDE5500AD7A1C /* MyLayoutUITests */,
 				1840828E1B2C46E8003F378B /* Products */,
 				2043D5DA20995DF800276C68 /* Frameworks */,
+				D24FCA51B45F5C33BE6BF6B2 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -882,6 +888,7 @@
 			isa = PBXGroup;
 			children = (
 				2043D5DB20995DF800276C68 /* CoreBluetooth.framework */,
+				78A3AD88218AC112123CC3EF /* Pods_MyLayoutDemo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -910,6 +917,15 @@
 				20DF423D2318A6000078CAA0 /* FLXTest1ViewController.m */,
 			);
 			name = FlexLayoutDemo;
+			sourceTree = "<group>";
+		};
+		D24FCA51B45F5C33BE6BF6B2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3629FA5F5CADED97FC05A568 /* Pods-MyLayoutDemo.debug.xcconfig */,
+				CBD8C7F4D906BDA19BECB2A5 /* Pods-MyLayoutDemo.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -972,9 +988,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 184082B01B2C46E8003F378B /* Build configuration list for PBXNativeTarget "MyLayoutDemo" */;
 			buildPhases = (
+				AC8A563C7A7756E15D71EDF9 /* [CP] Check Pods Manifest.lock */,
 				184082891B2C46E8003F378B /* Sources */,
 				1840828A1B2C46E8003F378B /* Frameworks */,
 				1840828B1B2C46E8003F378B /* Resources */,
+				22272A6C92C16E7859F956F8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1027,7 +1045,8 @@
 		184082851B2C46E8003F378B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1020;
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1520;
 				ORGANIZATIONNAME = YoungSoft;
 				TargetAttributes = {
 					181A10B41EDF12CF00996203 = {
@@ -1134,6 +1153,49 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		22272A6C92C16E7859F956F8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MyLayoutDemo/Pods-MyLayoutDemo-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/LookinServer/LookinServer.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LookinServer.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MyLayoutDemo/Pods-MyLayoutDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AC8A563C7A7756E15D71EDF9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MyLayoutDemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		181A10B01EDF12CF00996203 /* Sources */ = {
@@ -1374,10 +1436,18 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = MyLayout/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu99 gnu++11";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.youngsoft.MyLayout;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1402,10 +1472,18 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = MyLayout/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu99 gnu++11";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.youngsoft.MyLayout;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1420,6 +1498,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1439,6 +1518,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1449,14 +1529,12 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -1464,10 +1542,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1476,6 +1554,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1495,6 +1574,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1505,6 +1585,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1513,9 +1594,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1523,6 +1604,7 @@
 		};
 		184082B11B2C46E8003F378B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3629FA5F5CADED97FC05A568 /* Pods-MyLayoutDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_CODE_COVERAGE = YES;
@@ -1530,11 +1612,14 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BGQ8WB468K;
-				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/MyLayoutDemo/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-ObjC";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.meituan.MyLayoutDemo;
 				PRODUCT_NAME = MyLayoutDemo;
 				PROVISIONING_PROFILE = "";
@@ -1545,6 +1630,7 @@
 		};
 		184082B21B2C46E8003F378B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CBD8C7F4D906BDA19BECB2A5 /* Pods-MyLayoutDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_CODE_COVERAGE = YES;
@@ -1552,11 +1638,14 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BGQ8WB468K;
-				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/MyLayoutDemo/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-ObjC";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.meituan.MyLayoutDemo;
 				PRODUCT_NAME = MyLayoutDemo;
 				PROVISIONING_PROFILE = "";
@@ -1574,12 +1663,14 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = MyLayoutTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.youngsoft.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = MyLayout;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MyLayoutDemo.app/MyLayoutDemo";
@@ -1595,8 +1686,14 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = MyLayoutTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.youngsoft.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = MyLayout;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MyLayoutDemo.app/MyLayoutDemo";
@@ -1613,8 +1710,13 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = BGQ8WB468K;
 				INFOPLIST_FILE = MyLayoutUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.youngsoft.MyLayoutUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "4bac08b2-6788-4e38-8e3e-241ebd7fba1e";
@@ -1631,8 +1733,13 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				DEVELOPMENT_TEAM = BGQ8WB468K;
 				INFOPLIST_FILE = MyLayoutUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.youngsoft.MyLayoutUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "4bac08b2-6788-4e38-8e3e-241ebd7fba1e";
