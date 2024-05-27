@@ -47,6 +47,7 @@
 
 - (MyViewTraits *)fetchView:(UIView *)view bestLayoutSizeClass:(MySizeClass)sizeClass;
 
+- (void)setView:(UIView *)view layoutSizeClass:(MySizeClass)sizeClass withTraits:(MyViewTraits *)traits;
 
 @end
 
@@ -148,12 +149,29 @@
 @property (nonatomic, assign, getter=isReverseFloat) BOOL reverseFloat;
 @property (nonatomic, assign) BOOL clearFloat;
 
+//内部属性
+@property (nonatomic, strong, readonly) MyLayoutPos *topPosInner;
+@property (nonatomic, strong, readonly) MyLayoutPos *leadingPosInner;
+@property (nonatomic, strong, readonly) MyLayoutPos *bottomPosInner;
+@property (nonatomic, strong, readonly) MyLayoutPos *trailingPosInner;
+@property (nonatomic, strong, readonly) MyLayoutPos *centerXPosInner;
+@property (nonatomic, strong, readonly) MyLayoutPos *centerYPosInner;
+@property (nonatomic, strong, readonly) MyLayoutSize *widthSizeInner;
+@property (nonatomic, strong, readonly) MyLayoutSize *heightSizeInner;
+
+@property (nonatomic, strong, readonly) MyLayoutPos *leftPosInner;
+@property (nonatomic, strong, readonly) MyLayoutPos *rightPosInner;
+
+@property (nonatomic, strong, readonly) MyLayoutPos *baselinePosInner;
+
+@property (class, nonatomic, assign) BOOL isRTL;
+
 //内部方法
 - (BOOL)invalid;
 
 + (MyGravity)convertLeadingTrailingGravityFromLeftRightGravity:(MyGravity)horzGravity;
-- (MyGravity)vertGravityWith:(MyGravity)layoutVertGravity;
-- (MyGravity)horzGravityWith:(MyGravity)layoutHorzGravity;
+- (MyGravity)finalVertGravityFrom:(MyGravity)layoutVertGravity;
+- (MyGravity)finalHorzGravityFrom:(MyGravity)layoutHorzGravity;
 
 @end
 
@@ -178,12 +196,12 @@
 @property (nonatomic, assign) CGFloat paddingRight;
 
 //兼容1.9.2以及以前的老版本，因为老版本的命名不符合规范，所以这里重新命名。
-@property (nonatomic, assign, getter=paddingTop, setter=setPaddingTop:) CGFloat topPadding;
-@property (nonatomic, assign, getter=paddingLeading, setter=setPaddingLeading:) CGFloat leadingPadding;
-@property (nonatomic, assign, getter=paddingBottom, setter=setPaddingBottom:) CGFloat bottomPadding;
-@property (nonatomic, assign, getter=paddingTrailing, setter=setPaddingTrailing:) CGFloat trailingPadding;
-@property (nonatomic, assign, getter=paddingLeft, setter=setPaddingLeft:) CGFloat leftPadding;
-@property (nonatomic, assign, getter=paddingRight, setter=setPaddingRight:) CGFloat rightPadding;
+//@property (nonatomic, assign, getter=paddingTop, setter=setPaddingTop:) CGFloat topPadding;
+//@property (nonatomic, assign, getter=paddingLeading, setter=setPaddingLeading:) CGFloat leadingPadding;
+//@property (nonatomic, assign, getter=paddingBottom, setter=setPaddingBottom:) CGFloat bottomPadding;
+//@property (nonatomic, assign, getter=paddingTrailing, setter=setPaddingTrailing:) CGFloat trailingPadding;
+//@property (nonatomic, assign, getter=paddingLeft, setter=setPaddingLeft:) CGFloat leftPadding;
+//@property (nonatomic, assign, getter=paddingRight, setter=setPaddingRight:) CGFloat rightPadding;
 
 //为支持iOS11的safeArea而进行的padding的转化
 - (CGFloat)myLayoutPaddingTop;
@@ -204,7 +222,7 @@
 
 @end
 
-@interface MySequentLayoutFlexSpace : NSObject
+@interface MySequentLayoutFlexSpacing : NSObject
 @property (nonatomic, assign) CGFloat subviewSize;
 @property (nonatomic, assign) CGFloat minSpace;
 @property (nonatomic, assign) CGFloat maxSpace;
@@ -218,7 +236,7 @@
 @interface MySequentLayoutTraits : MyLayoutTraits
 
 @property (nonatomic, assign) MyOrientation orientation;
-@property (nonatomic, strong) MySequentLayoutFlexSpace *flexSpace;
+@property (nonatomic, strong) MySequentLayoutFlexSpacing *flexSpace;
 
 @end
 
