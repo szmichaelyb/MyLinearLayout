@@ -11,25 +11,18 @@
 #import "MyLayout.h"
 
 @interface DetailViewController ()
-
 @property(nonatomic, strong) NSArray *demoVCList;
-
 @property(nonatomic, assign) BOOL isPresentVC;
-
 @end
 
 
 @implementation DetailViewController
-
--(instancetype)initWithDemoVCList:(NSArray*)vcList
-{
+-(instancetype)initWithDemoVCList:(NSArray*)vcList {
     self = [super init];
-    if (self != nil)
-    {
+    if (self != nil) {
         self.demoVCList = vcList;
         self.isPresentVC = NO;
     }
-    
     return self;
 }
 
@@ -37,24 +30,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-    
+
     self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[CFTool font:15],NSForegroundColorAttributeName:[CFTool color:4]};
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Present" style:UIBarButtonItemStylePlain target:self action:@selector(handlePushOrPresent:)];
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-}
-
 
 #pragma mark -- UITableViewDataSource
 
@@ -62,9 +42,6 @@
 {
     return self.demoVCList.count;
 }
-
-// Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
-// Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -120,8 +97,7 @@
     self.isPresentVC = !self.isPresentVC;
     sender.title = self.isPresentVC ? @"Push" : @"Present";
     
-    if (self.isPresentVC)
-    {
+    if (self.isPresentVC) {
         [[[UIAlertView alloc] initWithTitle:@"" message:NSLocalizedString(@"If you select \"Present\", then you can touch Close button of topleft corner to dissmis the view controller",@"") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
     }
 }

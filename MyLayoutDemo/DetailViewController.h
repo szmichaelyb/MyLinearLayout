@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface DetailViewController : UITableViewController
-
 -(instancetype)initWithDemoVCList:(NSArray*)vcList;
-
 @end
 
