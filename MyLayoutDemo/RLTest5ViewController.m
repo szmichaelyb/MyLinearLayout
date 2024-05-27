@@ -11,19 +11,13 @@
 #import "CFTool.h"
 
 @interface RLTest5ViewController ()<UIScrollViewDelegate>
-
-
-
-
 @end
 
 @implementation RLTest5ViewController
-
-
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.edgesForExtendedLayout = UIRectEdgeNone;  //设置视图控制器中的视图尺寸不延伸到导航条或者工具条下面。您可以注释这句代码看看效果。
+    self.edgesForExtendedLayout = UIRectEdgeNone;  /// 设置视图控制器中的视图尺寸不延伸到导航条或者工具条下面。您可以注释这句代码看看效果。
 
     /*
        本示例用来介绍最值约束的使用方式。什么是最值约束呢？在一些场景中我们希望一个视图的宽度或者高度是某一些宽度或者高度集合中的最大值或者最小值，同样在一些场景中
@@ -45,6 +39,14 @@
         需要注意的是只有相对布局中的子视图的位置约束才支持位置的最值约束设置，其他布局中的子视图不支持！而尺寸最值约束则所有布局中的子视图都支持。
      */
     
+    /// TODO: 注意学习。
+    /// (1) 视图C的高度的一半，其表示方式：
+    ///     C.heightSize.clone(0,0.5)
+    /// (2) 视图B的宽度-20
+    ///     B.widthSize.clone(-20,1)
+    /// (2) 视图C的左边距偏移20
+    ///     C.leftPos.clone(20)
+    
     MyRelativeLayout *rootLayout = [MyRelativeLayout new];
     rootLayout.myMargin = 0;
     [self.view addSubview:rootLayout];
@@ -62,6 +64,13 @@
     layout2.leftPos.equalTo(rootLayout.leftPos);
     layout2.backgroundColor = [CFTool color:8];
     [rootLayout addSubview:layout2];
+    
+    //最值约束例子3
+    MyRelativeLayout *layout3 = [self createLayout3];
+    layout3.topPos.equalTo(layout2.bottomPos).offset(20);
+    layout3.leftPos.equalTo(rootLayout.leftPos);
+    layout3.backgroundColor = [CFTool color:8];
+    [rootLayout addSubview:layout3];
     
 }
 
@@ -81,42 +90,46 @@
     nameLabel.heightSize.equalTo(@(MyLayoutSize.wrap));
     [rootLayout addSubview:nameLabel];
     
-    //详情控件，尺寸是自适应的，但是最宽是屏幕宽度减20，这里减20的原因是因为布局视图设置了左右padding为10。
+    /// 详情控件，尺寸是自适应的，但是最宽是屏幕宽度减20，这里减20的原因是因为布局视图设置了左右padding为10。
     UILabel *detailLabel = [UILabel new];
     detailLabel.text = @"继续！";
     detailLabel.backgroundColor = [CFTool color:9];
-    //宽度自适应，最宽是屏幕的宽度减去20
-    detailLabel.widthSize.equalTo(@(MyLayoutSize.wrap)).uBound(self.view.widthSize, -20, 1);
+    /// TODO: 注意学习。这里减去20，是因为pading的间距
+    /// 宽度自适应，最宽是屏幕的宽度减去20。
+    detailLabel.widthSize.equalTo(@(MyLayoutSize.wrap)).uBound(self.view.widthSize,-20,1);
     detailLabel.heightSize.equalTo(@(MyLayoutSize.wrap));
     detailLabel.topPos.equalTo(nameLabel.bottomPos).offset(10);
     detailLabel.leftPos.equalTo(nameLabel.leftPos);
     [rootLayout addSubview:detailLabel];
     
-    //按钮控件，右边和详情控件对齐，但是当详情控件的内容太少时，起码要和名字控件最小的距离是40
+    /// 按钮控件，右边和详情控件对齐，但是当详情控件的内容太少时，起码要和名字控件最小的距离是40
     UIButton *clickButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [clickButton setTitle:@"Click me" forState:UIControlStateNormal];
     clickButton.backgroundColor = [CFTool color:10];
-    [clickButton sizeToFit];   //这里直接计算出clickButton的size是自适应的
+    /// TODO: 注意学习。这里因为在后面有用到尺寸。所以调用[sizeToFit]
+    /// 这里直接计算出clickButton的size是自适应的
+    [clickButton sizeToFit];
+    
     clickButton.topPos.equalTo(nameLabel.topPos);
-    //最新版本的相对布局可以让子视图的位置设置为某些视图位置中的最大或者最小值，也就是最值，我们可以对一个数组调用扩展分类的方法myMaxPos或者myMinPos来获取
-    //到数组中元素的最大或者最小位置值。使用最大最小值的前提是在计算当前位置的约束时，要求数组中的元素的约束都是已经计算好了的，否则得到的结果是未可知，就如本例中
-    //在计算clickButton的右边距时，detailLabel以及nameLabel的右边距都是已经计算好了的。
-    clickButton.rightPos.equalTo(@[detailLabel.rightPos, nameLabel.rightPos.clone(-1 *(40+clickButton.frame.size.width))].myMaxPos);
+    /// 最新版本的相对布局可以让子视图的位置设置为某些视图位置中的最大或者最小值，也就是最值，我们可以对一个数组调用扩展分类的方法myMaxPos或者myMinPos来获取
+    /// 到数组中元素的最大或者最小位置值。使用最大最小值的前提是在计算当前位置的约束时，要求数组中的元素的约束都是已经计算好了的，否则得到的结果是未可知，就如本例中
+    /// 在计算clickButton的右边距时，detailLabel以及nameLabel的右边距都是已经计算好了的。
+    /// TODO: `已经计算好`，其实就是已经设置好了的意思
+    clickButton.rightPos.equalTo(@[detailLabel.rightPos,nameLabel.rightPos.clone(-1*(40+clickButton.frame.size.width))].myMaxPos);
     [rootLayout addSubview:clickButton];
     
     [clickButton addTarget:self action:@selector(handleClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    
-    //这个控件的高度取nameLabel和detailLabel二个高度中的最小高度值。
-    //这个控件的宽度取nameLabel和detailLabel二个宽度中的最大宽度值。
-    //在设置最值尺寸约束时，要求数组中的约束尺寸是已经计算完毕了的，否则结果未可知。
+    /// 这个控件的高度取nameLabel和detailLabel二个高度中的最小高度值。
+    /// 这个控件的宽度取nameLabel和detailLabel二个宽度中的最大宽度值。
+    /// 在设置最值尺寸约束时，要求数组中的约束尺寸是已经计算完毕了的，否则结果未可知。
     UILabel *subDetailLabel = [UILabel new];
     subDetailLabel.text = @"这是一句很长的文字，随着detail的增长而显示越多";
     subDetailLabel.backgroundColor = [CFTool color:10];
     subDetailLabel.topPos.equalTo(detailLabel.bottomPos).offset(10);
     subDetailLabel.leftPos.equalTo(nameLabel.leftPos);
-    subDetailLabel.heightSize.equalTo(@[nameLabel.heightSize, detailLabel.heightSize].myMinSize);
-    subDetailLabel.widthSize.equalTo(@[nameLabel.widthSize, detailLabel.widthSize].myMaxSize);
+    subDetailLabel.heightSize.equalTo(@[nameLabel.heightSize,detailLabel.heightSize].myMinSize);
+    subDetailLabel.widthSize.equalTo(@[nameLabel.widthSize,detailLabel.widthSize].myMaxSize);
     [rootLayout addSubview:subDetailLabel];
 
     return rootLayout;
@@ -127,9 +140,9 @@
     MyRelativeLayout *rootLayout = [MyRelativeLayout new];
     rootLayout.widthSize.equalTo(@(MyLayoutSize.wrap));
     rootLayout.heightSize.equalTo(@(MyLayoutSize.wrap));
-    rootLayout.padding = UIEdgeInsetsMake(10, 10, 10, 10);
+    rootLayout.padding = UIEdgeInsetsMake(10,10,10,10);
     
-    //名字控件，尺寸是自适应的。
+    /// 名字控件，尺寸是自适应的。
     UILabel *nameLabel = [UILabel new];
     nameLabel.text = @"欧阳大哥";
     nameLabel.widthSize.equalTo(@(MyLayoutSize.wrap));
@@ -139,46 +152,115 @@
     UILabel *detailLabel = [UILabel new];
     detailLabel.text = @"继续！";
     detailLabel.backgroundColor = [CFTool color:9];
-    //宽度自适应，最宽是屏幕的宽度减去20
+    /// 宽度固定为90
     detailLabel.widthSize.equalTo(@(90));
     detailLabel.heightSize.equalTo(@(MyLayoutSize.wrap));
     detailLabel.topPos.equalTo(nameLabel.bottomPos).offset(10);
     detailLabel.leftPos.equalTo(nameLabel.leftPos);
     [rootLayout addSubview:detailLabel];
     
-    //按钮控件，右边和详情控件对齐，但是当详情控件的内容太少时，起码要和名字控件最小的距离是40
+    /// 按钮控件，右边和详情控件对齐，但是当详情控件的内容太少时，起码要和名字控件最小的距离是40
     UIButton *clickButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [clickButton setTitle:@"Click me" forState:UIControlStateNormal];
     clickButton.backgroundColor = [CFTool color:10];
-    [clickButton sizeToFit];   //这里直接计算出date的size是自适应
+    /// 这里直接计算出date的size是自适应
+    [clickButton sizeToFit];
     clickButton.leftPos.equalTo(detailLabel.rightPos).offset(20);
-    //按钮的底部位置取100和detailLabel底部位置二者的最小值。
-    //在这个例子中随着detailLabel的高度增加底部越来越大，但是clickButton的底部如果超过100则最终会取值100
+    /// 按钮的底部位置取100和detailLabel底部位置二者的最小值。
+    /// 在这个例子中随着detailLabel的高度增加底部越来越大，但是clickButton的底部如果超过100则最终会取值100
     clickButton.bottomPos.equalTo(@[@100,detailLabel.bottomPos].myMinPos);
     [rootLayout addSubview:clickButton];
     [clickButton addTarget:self action:@selector(handleClick:) forControlEvents:UIControlEventTouchUpInside];
     
+    /// TODO: 注意学习。先乘后加。
+    /// 从布局尺寸中克隆一个尺寸对象来。这个克隆出来的尺寸值是源尺寸对象的值乘以multival再加上addVal。
+    /// nameLabel.widthSize.clone(10,0.5)
     
-    //这个控件的高度取50和detailLabel二个高度中的最小高度值。
-    //这个控件的宽度取nameLabel宽度的一半加10，detailLabel高度的3/5，100三个宽度中的最大宽度值。
-    //在设置最值尺寸约束时，要求数组中的约束尺寸是已经计算完毕了的，否则结果未可知。
+    /// 这个控件的高度取50和detailLabel二个高度中的最小高度值。
+    /// 这个控件的宽度取nameLabel宽度的一半加10，detailLabel高度的3/5，100三个宽度中的最大宽度值。
+    /// 在设置最值尺寸约束时，要求数组中的约束尺寸是已经计算完毕了的，否则结果未可知。
     UILabel *subDetailLabel = [UILabel new];
     subDetailLabel.text = @"这是一句很长的文字，随着detail的增长而显示越多";
     subDetailLabel.backgroundColor = [CFTool color:10];
     subDetailLabel.topPos.equalTo(clickButton.bottomPos).offset(10);
     subDetailLabel.leftPos.equalTo(detailLabel.rightPos).offset(10);
-    subDetailLabel.heightSize.equalTo(@[@50, detailLabel.heightSize].myMinSize);
-    subDetailLabel.widthSize.equalTo(@[nameLabel.widthSize.clone(10, 0.5), detailLabel.heightSize.clone(0,0.6), @(100)].myMaxSize);
+    subDetailLabel.heightSize.equalTo(@[@50,detailLabel.heightSize].myMinSize);
+    subDetailLabel.widthSize.equalTo(@[nameLabel.widthSize.clone(10,0.5),detailLabel.heightSize.clone(0,0.6),@(100)].myMaxSize);
     [rootLayout addSubview:subDetailLabel];
 
-    
     return rootLayout;
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(MyRelativeLayout*)createLayout3
+{
+    MyRelativeLayout *rootlayout = [MyRelativeLayout new];
+    rootlayout.widthSize.equalTo(@(MyLayoutSize.wrap));
+    rootlayout.heightSize.equalTo(@(MyLayoutSize.wrap));
+    rootlayout.padding = UIEdgeInsetsMake(10,10,10,10);
+    
+    /// 名字控件，尺寸是自适应的。
+    UILabel *nameLabel = [UILabel new];
+    nameLabel.text = @"欧阳大哥";
+    nameLabel.widthSize.equalTo(@(MyLayoutSize.wrap));
+    nameLabel.heightSize.equalTo(@(MyLayoutSize.wrap));
+    nameLabel.backgroundColor = [CFTool color:2];
+    [rootlayout addSubview:nameLabel];
+    
+    /// 详情控件，尺寸是自适应的，但是最宽是屏幕宽度减20，这里减20的原因是因为布局视图设置了左右padding为10。
+    UILabel *detailLabel = [UILabel new];
+    detailLabel.text = @"继续！";
+    detailLabel.backgroundColor = [CFTool color:9];
+    /// TODO: 注意学习。这里减去20，是因为pading的间距
+    /// 宽度自适应，最宽是屏幕的宽度减去20。
+    detailLabel.widthSize.equalTo(@(MyLayoutSize.wrap)).uBound(self.view.widthSize,-20,1);
+    detailLabel.heightSize.equalTo(@(MyLayoutSize.wrap));
+    detailLabel.topPos.equalTo(nameLabel.bottomPos).offset(10);
+    detailLabel.leftPos.equalTo(nameLabel.leftPos);
+    [rootlayout addSubview:detailLabel];
+    
+    /// 按钮控件，右边和详情控件对齐，但是当详情控件的内容太少时，起码要和名字控件最小的距离是40
+    UIButton *clickButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [clickButton setTitle:@"Click me" forState:UIControlStateNormal];
+    clickButton.backgroundColor = [CFTool color:10];
+    /// TODO: 注意学习。这里因为在后面有用到尺寸。所以调用[sizeToFit]
+    /// 这里直接计算出clickButton的size是自适应的
+    [clickButton sizeToFit];
+    
+    clickButton.topPos.equalTo(nameLabel.topPos);
+    /// 最新版本的相对布局可以让子视图的位置设置为某些视图位置中的最大或者最小值，也就是最值，我们可以对一个数组调用扩展分类的方法myMaxPos或者myMinPos来获取
+    /// 到数组中元素的最大或者最小位置值。使用最大最小值的前提是在计算当前位置的约束时，要求数组中的元素的约束都是已经计算好了的，否则得到的结果是未可知，就如本例中
+    /// 在计算clickButton的右边距时，detailLabel以及nameLabel的右边距都是已经计算好了的。
+    /// TODO: `已经计算好`，其实就是已经设置好了的意思
+    clickButton.rightPos.equalTo(@[detailLabel.rightPos,nameLabel.rightPos.clone(-1*(40+clickButton.frame.size.width))].myMaxPos);
+    [rootlayout addSubview:clickButton];
+    
+    [clickButton addTarget:self action:@selector(handleClick2:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    UILabel *sublb = UILabel.new;
+    sublb.text = @"呀灭地嘎嘎";
+    sublb.backgroundColor = [CFTool color:4];
+    /// sublb.widthSize.equalTo(@(MyLayoutSize.wrap));
+    sublb.heightSize.equalTo(@(MyLayoutSize.wrap));
+    sublb.widthSize.equalTo(@[@(MyLayoutSize.wrap),nameLabel.widthSize,detailLabel.widthSize].myMaxSize);
+    
+    /// sublb.topPos.equalTo(nameLabel.bottomPos).offset(10);
+    sublb.topPos.equalTo(@[nameLabel.bottomPos,detailLabel.bottomPos].myMaxPos);
+    [rootlayout addSubview:sublb];
+    
+    /// 这个控件的高度取nameLabel和detailLabel二个高度中的最小高度值。
+    /// 这个控件的宽度取nameLabel和detailLabel二个宽度中的最大宽度值。
+    /// 在设置最值尺寸约束时，要求数组中的约束尺寸是已经计算完毕了的，否则结果未可知。
+    UILabel *subDetailLabel = [UILabel new];
+    subDetailLabel.text = @"这是一句很长的文字，随着detail的增长而显示越多";
+    subDetailLabel.backgroundColor = [CFTool color:10];
+    subDetailLabel.topPos.equalTo(sublb.bottomPos).offset(10);
+    subDetailLabel.leftPos.equalTo(nameLabel.leftPos);
+    subDetailLabel.heightSize.equalTo(@[nameLabel.heightSize,detailLabel.heightSize].myMinSize);
+    subDetailLabel.widthSize.equalTo(@[nameLabel.widthSize,detailLabel.widthSize].myMaxSize);
+    [rootlayout addSubview:subDetailLabel];
+    
+    return rootlayout;
 }
 
 -(IBAction)handleClick:(UIButton*)sender
@@ -187,15 +269,13 @@
     label.text = [NSString stringWithFormat:@"继续！ %@", label.text];
 }
 
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)handleClick2:(UIButton*)sender
+{
+    UILabel *label = (UILabel*)sender.superview.subviews[1];
+    label.text = [NSString stringWithFormat:@"继续！ %@", label.text];
+    
+    sender.selected = !sender.selected;
+    label.visibility = sender.selected?MyVisibility_Gone:MyVisibility_Visible;
 }
-*/
 
 @end

@@ -200,50 +200,27 @@
     
     //注意这里最后一个偏移-20，也能达到和底部边距的效果。
     v12.heightSize.equalTo(@[v13.heightSize.add(-10),v14.heightSize.add(-20)]).add(-10);
-    
-    
 }
 
-
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark -- Handle Method
 
 -(void)handleHidden:(UIButton*)sender
 {
-    if (self.visibilitySwitch.isOn)
-    {
+    if (self.visibilitySwitch.isOn) {
         self.visibilityButton.visibility = MyVisibility_Gone;
-    }
-    else
-    {
+    } else {
         self.visibilityButton.visibility = MyVisibility_Invisible;
     }
-
 }
 
 -(void)handleShow:(UIButton*)sender
 {
     self.visibilityButton.visibility = MyVisibility_Visible;
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

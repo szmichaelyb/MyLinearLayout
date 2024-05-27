@@ -10,13 +10,10 @@
 #import "MyLayout.h"
 #import "CFTool.h"
 
-
 @interface LLTest1ViewController ()
-
 @end
 
 @implementation LLTest1ViewController
-
 -(void)loadView
 {
     /*
@@ -126,7 +123,6 @@
     UIBarButtonItem *RTLBar = [[UIBarButtonItem alloc]initWithTitle:@"RTL" style:UIBarButtonItemStylePlain target:self action:@selector(RTLAction)];
     UIBarButtonItem *LTRBar = [[UIBarButtonItem alloc]initWithTitle:@"LTR" style:UIBarButtonItemStylePlain target:self action:@selector(LTRAction)];
     self.navigationItem.rightBarButtonItems = @[RTLBar,LTRBar];
-    // Do any additional setup after loading the view.
 }
 
 // RTL- UI - 更新
@@ -299,17 +295,5 @@
     
     return horzLayout;
 }
-
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

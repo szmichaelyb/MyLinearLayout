@@ -11,15 +11,9 @@
 #import "CFTool.h"
 
 @interface RLTest4ViewController ()<UIScrollViewDelegate>
-
-
-
-
 @end
 
 @implementation RLTest4ViewController
-
-
 -(void)loadView
 {
     /*
@@ -38,26 +32,21 @@
     rootLayout.gravity = MyGravity_Horz_Fill;
     [scrollView addSubview:rootLayout];
     
-    //最小最大间距限制例子。segment的简易实现。
+    /// 最小最大间距限制例子。segment的简易实现。
     [self createDemo1:rootLayout];
     
-    //右边边距限制的例子。
+    /// 右边边距限制的例子。
     [self createDemo2:rootLayout];
 
-    //左边边距限制和上下边距限制的例子。
+    /// 左边边距限制和上下边距限制的例子。
     [self createDemo3:rootLayout];
 
     
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(void)handleButtonSelect:(UIButton*)button
@@ -195,13 +184,14 @@
         trailingLabel.topPos.equalTo(leadingImageView.topPos).offset(4);
         [containerLayout addSubview:trailingLabel];
         
+        /// TODO: 注意学习!!!
         flexedLabel.widthSize.equalTo(@(MyLayoutSize.wrap)); //宽度自适应
-        flexedLabel.trailingPos.uBound(trailingLabel.leadingPos, editImageView.frame.size.width + 10); //右边的最大的边界就等于trailingLabel的最左边再减去editImageView的尺寸外加上10,这里的10是视图之间的间距，为了让视图之间保持有足够的间距。这样当flexedLabel的宽度超过这个最大的右边界时，系统自动会缩小flexedLabel的宽度，以便来满足右边界的限制。 这个场景非常适合某个UITableViewCell里面的两个子视图之间有尺寸长度约束的情况。
-        
-        
+        flexedLabel.trailingPos.uBound(trailingLabel.leadingPos, editImageView.frame.size.width + 10);
+        /// 右边的最大的边界就等于trailingLabel的最左边再减去editImageView的尺寸外加上10,
+        /// 这里的10是视图之间的间距，为了让视图之间保持有足够的间距。这样当flexedLabel的宽度超过这个最大的右边界时，
+        /// 系统自动会缩小flexedLabel的宽度，以便来满足右边界的限制。
+        /// 这个场景非常适合某个UITableViewCell里面的两个子视图之间有尺寸长度约束的情况。
     }
-    
-    
 }
 
 
@@ -210,7 +200,6 @@
     UILabel *label = (UILabel*)sender.view;
     NSString *text = label.text;
     label.text = [text stringByAppendingString:@"+++"];
-    
 }
 
 -(void)createDemo3:(UIView*)rootLayout
@@ -219,63 +208,52 @@
       这个例子用来了解上下边距的约束和左边边距的约束的场景。这些约束的设置特别适合那些有尺寸依赖以及位置依赖的UITableViewCell的场景。
      */
      
-    
     MyRelativeLayout *containerLayout = [MyRelativeLayout new];
     containerLayout.heightSize.equalTo(@150);
     containerLayout.padding = UIEdgeInsetsMake(6, 6, 6, 6);
     containerLayout.backgroundColor = [CFTool color:0];
     [rootLayout addSubview:containerLayout];
     
-    
-    //左边文字居中并且根据内容变化。
+    /// 左边文字居中并且根据内容变化。
     UILabel *leadingLabel = [UILabel new];
     leadingLabel.backgroundColor = [CFTool color:5];
     leadingLabel.text = @"Click me:";
     leadingLabel.textColor = [CFTool color:4];
-    leadingLabel.widthSize.equalTo(@100);  //宽度固定为100
-    leadingLabel.heightSize.equalTo(@(MyLayoutSize.wrap)); //高度由子视图的内容确定，自动计算高度。
-    leadingLabel.topPos.lBound(containerLayout.topPos,0);   //最小的上边界是父布局的顶部。
-    leadingLabel.bottomPos.uBound(containerLayout.bottomPos, 0);  //最大的下边界是父布局的底部
-    //通过这两个位置的最小最大边界设置，视图leadingLabel将会在这个范围内垂直居中显示，并且当高度超过这个边界时，会自动的压缩子视图的高度。
+    leadingLabel.widthSize.equalTo(@100);                  /// 宽度固定为100
+    leadingLabel.heightSize.equalTo(@(MyLayoutSize.wrap)); /// 高度由子视图的内容确定，自动计算高度。
+    
+    /// TODO: 注意学习这两行代码。认真思考!!!
+    leadingLabel.topPos.lBound(containerLayout.topPos,0);       /// 最小的上边界是父布局的顶部
+    leadingLabel.bottomPos.uBound(containerLayout.bottomPos,0); /// 最大的下边界是父布局的底部
+    
+    /// 通过这两个位置的最小最大边界设置，视图leadingLabel将会在这个范围内垂直居中显示，并且当高度超过这个边界时，会自动的压缩子视图的高度。
     [containerLayout addSubview:leadingLabel];
     
-    //添加手势处理。
+    /// 添加手势处理。
     UITapGestureRecognizer *leadingLabelTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleClick:)];
     leadingLabel.userInteractionEnabled = YES;
     [leadingLabel addGestureRecognizer:leadingLabelTapGesture];
     
-    
-    
-    //右边按钮
+    /// 右边按钮
     UILabel *trailingLabel = [UILabel new];
     trailingLabel.backgroundColor = [CFTool color:6];
     trailingLabel.text = @"Click me:";
     trailingLabel.textColor = [CFTool color:4];
-    trailingLabel.trailingPos.equalTo(containerLayout.trailingPos);  //和父布局视图右对齐。
-    trailingLabel.centerYPos.equalTo(leadingLabel.centerYPos);   //和左边视图垂直居中对齐。
-    trailingLabel.leadingPos.lBound(leadingLabel.trailingPos, 10);     //右边视图的最小边界是等于左边视图的右边再偏移10，这样当右边视图的宽度超过这个最小边界时则会自动压缩视图的宽度。
-    trailingLabel.widthSize.equalTo(@(MyLayoutSize.wrap));    //宽度等于自身的宽度。这个设置和上面的leadingPos.lBound方法配合使用实现子视图宽度的压缩。
-    trailingLabel.heightSize.equalTo(@(MyLayoutSize.wrap)).uBound(containerLayout.heightSize, 0, 1); //但是最大的高度等于父布局视图的高度(注意这里内部自动减去了padding的值)
+    trailingLabel.trailingPos.equalTo(containerLayout.trailingPos);  /// 和父布局视图右对齐。
+    trailingLabel.centerYPos.equalTo(leadingLabel.centerYPos);       /// 和左边视图垂直居中对齐。
+    /// TODO: 认真理解并学习!!!
+    /// 右边视图的最小边界是等于左边视图的右边再偏移10，这样当右边视图的宽度超过这个最小边界时则会自动压缩视图的宽度。
+    trailingLabel.leadingPos.lBound(leadingLabel.trailingPos,10);
+    /// 宽度等于自身的宽度。这个设置和上面的leadingPos.lBound方法配合使用实现子视图宽度的压缩。
+    trailingLabel.widthSize.equalTo(@(MyLayoutSize.wrap));
+    /// 但是最大的高度等于父布局视图的高度(注意这里内部自动减去了padding的值)
+    trailingLabel.heightSize.equalTo(@(MyLayoutSize.wrap)).uBound(containerLayout.heightSize,0,1);
     [containerLayout addSubview:trailingLabel];
     
-    //添加手势处理。
+    /// 添加手势处理。
     UITapGestureRecognizer *trailingLabelTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleClick:)];
     trailingLabel.userInteractionEnabled = YES;
     [trailingLabel addGestureRecognizer:trailingLabelTapGesture];
-
-    
-    
-    
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
